@@ -127,6 +127,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         if (mainViewModel != null) {
             mPagesAdapter.setPageResultList(mainViewModel.getPageResultList());
             mPagesAdapter.notifyDataSetChanged();
+            autocompleteView.showDropDown();
         }
 
     }
