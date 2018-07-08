@@ -12,11 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 
-import com.example.akash.wiki.data.MainViewModel;
 import com.example.akash.wiki.R;
-import com.example.akash.wiki.data.ViewModelFactory;
 import com.example.akash.wiki.adapter.PagesAdapter;
+import com.example.akash.wiki.data.MainViewModel;
+import com.example.akash.wiki.data.ViewModelFactory;
 import com.example.akash.wiki.model.Page;
 import com.example.akash.wiki.utils.CustomAutoCompleteTextView;
 
@@ -36,6 +37,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     Toolbar toolbarMain;
     @BindView(R.id.autocompleteView)
     CustomAutoCompleteTextView autocompleteView;
+    @BindView(R.id.pbSearchResults)
+    ProgressBar pbSearchResults;
 
     private Context mContext;
     private PagesAdapter mPagesAdapter;
@@ -75,7 +78,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPagesAdapter= new PagesAdapter(mContext, R.layout.list_item_search);
+        mPagesAdapter = new PagesAdapter(mContext, R.layout.list_item_search, this);
 
         autocompleteView.setAdapter(mPagesAdapter);
         autocompleteView.setOnItemClickListener(this);
@@ -86,7 +89,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onResume() {
         super.onResume();
-        if(mainViewModel != null) {
+        if (mainViewModel != null) {
             mPagesAdapter.setPageResultList(mainViewModel.getPageResultList());
             mPagesAdapter.notifyDataSetChanged();
         }
@@ -96,8 +99,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onPause() {
         super.onPause();
-        mViewModelFactory= new ViewModelFactory(mPagesAdapter.getPageResultList());
-        mainViewModel= ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        mViewModelFactory = new ViewModelFactory(mPagesAdapter.getPageResultList());
+        mainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
     }
 
     @Override
@@ -105,10 +108,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         autocompleteView.setText("");
         Page page = (Page) parent.getItemAtPosition(position);
 
-        //TODO: commit a new fragment to show the details
         Bundle b = new Bundle();
-        b.putString("id", page.getPageId());
+        b.putString("title", page.getTitle());
         ((MainActivity) getActivity()).commitPageDetailsFragment(b);
+    }
+
+    public void showProgressBar(boolean flag){
+        if(flag)
+            pbSearchResults.setVisibility(View.VISIBLE);
+        else
+            pbSearchResults.setVisibility(View.INVISIBLE);
     }
 
     @Override

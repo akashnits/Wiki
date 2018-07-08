@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     tools:context=".ui.SearchFragment">
 
     <android.support.v7.widget.Toolbar
@@ -21,10 +22,28 @@
             android:text="@string/wiki"/>
     </android.support.v7.widget.Toolbar>
 
+    <ProgressBar
+        android:id="@+id/pbSearchResults"
+        android:layout_width="match_parent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="wrap_content"
+        android:indeterminateOnly="true"
+        android:layout_gravity="top"
+        android:layout_marginTop="-10dp"
+        android:visibility="invisible"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextLabel">
     <com.example.akash.wiki.utils.CustomAutoCompleteTextView
         android:id="@+id/autocompleteView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search_wiki"/>
+
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public void commitPageDetailsFragment(Bundle args){
         mFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right)
                 .add(R.id.container, PageDetailsFragment.newInstance(args), "pageDetailsFragment")
                 .addToBackStack(null)
                 .commit();

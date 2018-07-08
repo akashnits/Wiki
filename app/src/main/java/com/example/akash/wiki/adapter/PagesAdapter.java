@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +25,15 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.akash.wiki.R;
 import com.example.akash.wiki.model.Page;
 import com.example.akash.wiki.model.Terms;
 import com.example.akash.wiki.model.Thumbnail;
+import com.example.akash.wiki.ui.SearchFragment;
 import com.example.akash.wiki.utils.PicassoCircularTransformation;
+import com.example.akash.wiki.utils.Utils;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -44,11 +49,13 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
     private int mResource;
     private int mTextViewResourceId;
     private List<Page> pageResultList= new ArrayList<>();
+    private SearchFragment mSearchFragment;
 
-    public PagesAdapter(Context context, int textViewResourceId) {
+    public PagesAdapter(Context context, int textViewResourceId, SearchFragment fragment) {
         super(context, textViewResourceId);
         this.mContext = context;
         this.mTextViewResourceId = textViewResourceId;
+        this.mSearchFragment= fragment;
     }
 
     @Override
@@ -151,6 +158,11 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
                     pageResultList.clear();
+                    Handler handler= new Handler(Looper.getMainLooper());
+                    if(Utils.isNetworkAvailable(mContext))
+                        handler.post(() -> mSearchFragment.showProgressBar(true));
+                    else
+                        handler.post(() -> Toast.makeText(mContext, "No internet connection", Toast.LENGTH_SHORT).show());
                     // Retrieve the autocomplete results. Also, runs on a worker thread
                     pageResultList = autocomplete(constraint.toString());
 
@@ -163,6 +175,7 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+                mSearchFragment.showProgressBar(false);
                 if (results != null && results.count > 0) {
                     notifyDataSetChanged();
                 }
@@ -188,11 +201,11 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
             sb.append("&formatversion=2");
             sb.append("&piprop=thumbnail");
             sb.append("&pithumbsize=50");
-            sb.append("&pilimit=10");
+            sb.append("&pilimit=50");
             sb.append("&wbptterms=description");
             //sb.append("&gpssearch=Albert%20Ei");
             sb.append("&gpssearch=" + URLEncoder.encode(input, "utf8"));
-            sb.append("&gpslimit=10");
+            sb.append("&gpslimit=50");
 
             Log.v(TAG, sb.toString());
 
