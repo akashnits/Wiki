@@ -1,8 +1,6 @@
 package com.example.akash.wiki.ui;
 
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.example.akash.wiki.MainViewModel;
+import com.example.akash.wiki.data.MainViewModel;
 import com.example.akash.wiki.R;
-import com.example.akash.wiki.ViewModelFactory;
+import com.example.akash.wiki.data.ViewModelFactory;
 import com.example.akash.wiki.adapter.PagesAdapter;
 import com.example.akash.wiki.model.Page;
 import com.example.akash.wiki.utils.CustomAutoCompleteTextView;

@@ -1,4 +1,4 @@
-package com.example.akash.wiki;
+package com.example.akash.wiki.data;
 
 import android.arch.lifecycle.ViewModel;
 

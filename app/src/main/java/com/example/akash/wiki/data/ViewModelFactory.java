@@ -1,7 +1,5 @@
-package com.example.akash.wiki;
+package com.example.akash.wiki.data;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
