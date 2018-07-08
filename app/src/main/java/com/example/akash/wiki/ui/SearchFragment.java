@@ -72,6 +72,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     private MainViewModel mainViewModel;
     private AppDatabase mDb;
     private RecentSearchAdapter mRecentSearchAdapter;
+    private boolean flag= true;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -119,6 +120,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         rvRecentSearches.setAdapter(mRecentSearchAdapter);
 
         updateUI();
+
     }
 
 
@@ -128,7 +130,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         if (mainViewModel != null) {
             mPagesAdapter.setPageResultList(mainViewModel.getPageResultList());
             mPagesAdapter.notifyDataSetChanged();
-            autocompleteView.showDropDown();
+            if(flag)
+                autocompleteView.showDropDown();
+            flag= true;
         }
 
     }
@@ -173,6 +177,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        flag= false;
         unbinder.unbind();
     }
 
