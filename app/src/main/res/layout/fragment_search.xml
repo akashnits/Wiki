@@ -34,7 +34,7 @@
         />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_username"
+        android:id="@+id/til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/TextLabel">
@@ -45,5 +45,40 @@
         android:hint="@string/search_wiki"/>
 
     </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/lvRecentSearches"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvRecentSearches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/recent_searches"
+                android:textAllCaps="true"/>
+
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/delete_icon"
+                android:src="@drawable/ic_delete_black_24dp" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvRecentSearches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+
 
 </LinearLayout>

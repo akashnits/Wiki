@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -40,9 +39,9 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
+public class AutoCompleteTextviewAdapter extends ArrayAdapter<Page> implements Filterable{
 
-    public static final String TAG= PagesAdapter.class.getSimpleName();
+    public static final String TAG= AutoCompleteTextviewAdapter.class.getSimpleName();
     public static final String WIKIPEDIA_API_BASE= "https://en.wikipedia.org/w";
 
     private Context mContext;
@@ -50,8 +49,9 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
     private int mTextViewResourceId;
     private List<Page> pageResultList= new ArrayList<>();
     private SearchFragment mSearchFragment;
+    private String mConstraint;
 
-    public PagesAdapter(Context context, int textViewResourceId, SearchFragment fragment) {
+    public AutoCompleteTextviewAdapter(Context context, int textViewResourceId, SearchFragment fragment) {
         super(context, textViewResourceId);
         this.mContext = context;
         this.mTextViewResourceId = textViewResourceId;
@@ -90,7 +90,7 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Page page= null;;
+        Page page= null;
         if(pageResultList != null && pageResultList.size() > 0)
             page= pageResultList.get(position);
 
@@ -157,6 +157,7 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
+                    mConstraint= constraint.toString();
                     pageResultList.clear();
                     Handler handler= new Handler(Looper.getMainLooper());
                     if(Utils.isNetworkAvailable(mContext))
@@ -274,5 +275,13 @@ public class PagesAdapter extends ArrayAdapter<Page> implements Filterable{
 
     public void setPageResultList(List<Page> pageResultList) {
         this.pageResultList = pageResultList;
+    }
+
+    public String getmConstraint() {
+        return mConstraint;
+    }
+
+    public void setmConstraint(String mConstraint) {
+        this.mConstraint = mConstraint;
     }
 }

@@ -102,7 +102,8 @@ public class PageDetailsFragment extends Fragment {
 
         toolbarDetails.setTitle(getResources().getString(R.string.details));
         toolbarDetails.setTitleTextColor(Color.WHITE);
-        pbDetails.setVisibility(View.VISIBLE);
+        if(pbDetails != null)
+            pbDetails.setVisibility(View.VISIBLE);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarDetails);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -124,7 +125,8 @@ public class PageDetailsFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                pbDetails.setVisibility(View.INVISIBLE);
+                if(pbDetails != null)
+                    pbDetails.setVisibility(View.INVISIBLE);
             }
 
             @SuppressWarnings("deprecation")

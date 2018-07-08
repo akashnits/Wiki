@@ -6,4 +6,6 @@
     <string name="search_wiki">Search Wiki...</string>
     <string name="details">Details</string>
     <string name="wiki">Wiki</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="delete_icon">delete icon</string>
 </resources>
